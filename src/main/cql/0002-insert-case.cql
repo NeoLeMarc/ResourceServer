@@ -1,0 +1,43 @@
+INSERT INTO rki_covid19_case (
+ ObjectId,
+ IdBundesland,
+ Bundesland,
+ Landkreis,
+ Altersgruppe,
+ Geschlecht,
+ AnzahlFall,
+ AnzahlTodesfall,
+ Meldedatum,
+ IdLandkreis,
+ Datenstand,
+ NeuerFall,
+ NeuerTodesfall,
+ Refdatum,
+ NeuGenesen,
+ AnzahlGenesen,
+ IstErkrankungsbeginn,
+ Altersgruppe2,
+ DatensatzDatum
+ ) values
+(
+  32253023,
+  1,
+  'Schleswig-Holstein',
+  'SK Flensburg',
+  'A00-A04',
+  'W',
+  1,
+  0,
+  '2020-08-24 00:00:00',
+  '01001',
+  '2020-09-04 00:00:00',
+  0,
+  -9,
+  '2020-08-24 00:00:00',
+  -9,
+  0,
+  0,
+  'Nicht uebermittelt' ,
+  '2020-09-04' );
+
+
