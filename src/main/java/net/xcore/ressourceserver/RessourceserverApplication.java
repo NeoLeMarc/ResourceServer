@@ -30,6 +30,6 @@ public class RessourceserverApplication {
   @GetMapping("/rkidata")
   public String rkidata(){
     Optional<RkiCovid19Case> rkiCase = cassandraTemplate.query(RkiCovid19Case.class).one();
-    return rkiCase.toString();
+    return rkiCase.get().toString();
   }
 }

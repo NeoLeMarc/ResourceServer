@@ -6,7 +6,6 @@ import org.springframework.data.cassandra.core.mapping.Table;
 
 @Table("rki_covid19_case")
 public class RkiCovid19Case {
-
         private final String altersgruppe;
         private final String altersgruppe2;
         private final int anzahlFall;
@@ -116,5 +115,28 @@ public class RkiCovid19Case {
 
         public RkiCovid19CaseKey getCaseKey() {
                 return caseKey;
+        }
+
+        @Override
+        public String toString() {
+                return "RkiCovid19Case{" +
+                    "altersgruppe='" + altersgruppe + '\'' +
+                    ", altersgruppe2='" + altersgruppe2 + '\'' +
+                    ", anzahlFall=" + anzahlFall +
+                    ", anzahlGenesen=" + anzahlGenesen +
+                    ", anzahlTodesfall=" + anzahlTodesfall +
+                    ", bundesland='" + bundesland + '\'' +
+                    ", datenstand=" + datenstand +
+                    ", geschlecht='" + geschlecht + '\'' +
+                    ", idBundesland=" + idBundesland +
+                    ", idLandkreis='" + idLandkreis + '\'' +
+                    ", istErkrankungsbeginn=" + istErkrankungsbeginn +
+                    ", landkreis='" + landkreis + '\'' +
+                    ", meldedatum=" + meldedatum +
+                    ", neuGenesen=" + neuGenesen +
+                    ", neuerFall=" + neuerFall +
+                    ", neuerTodesfall=" + neuerTodesfall +
+                    ", caseKey=" + caseKey +
+                    '}';
         }
 }
