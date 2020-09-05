@@ -1,14 +1,12 @@
 package net.xcore.ressourceserver.rki.domain;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.time.Instant;
-import org.codehaus.jackson.annotate.JsonProperty;
-import org.codehaus.jackson.annotate.JsonSetter;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import net.xcore.ressourceserver.RKIDateAndTimeDeserializer;
+import net.xcore.ressourceserver.RKIDateAndTimeDeserializer2;
 
+@SuppressWarnings("FieldNamingConvention")
 public class RkiCovid19CaseDto {
-
-  Logger logger = (Logger) LoggerFactory.getLogger(RkiCovid19Case.class);
 
   public String Altersgruppe;
   public String Altersgruppe2;
@@ -16,20 +14,47 @@ public class RkiCovid19CaseDto {
   public int AnzahlGenesen;
   public int AnzahlTodesfall;
   public String Bundesland;
+  @JsonDeserialize(using = RKIDateAndTimeDeserializer2.class)
   public Instant Datenstand;
   public String Geschlecht;
   public int IdBundesland;
   public String IdLandkreis;
   public int IstErkrankungsbeginn;
   public String Landkreis;
+  @JsonDeserialize(using = RKIDateAndTimeDeserializer.class)
   public Instant Meldedatum;
   public int NeuGenesen;
   public int NeuerFall;
   public int NeuerTodesfall;
   public int ObjectId;
   public Instant DatensatzDatum;
+  @JsonDeserialize(using = RKIDateAndTimeDeserializer.class)
+  public Instant Refdatum;
 
   public RkiCovid19CaseDto() {
+  }
+
+  public RkiCovid19CaseDto(RkiCovid19Case rcase) {
+    RkiCovid19CaseKey key = rcase.getCaseKey();
+    ObjectId = key.getObjectId();
+    DatensatzDatum = key.getDatensatzDatum();
+    Altersgruppe = rcase.getAltersgruppe();
+    Altersgruppe2 = rcase.getAltersgruppe2();
+    AnzahlFall = rcase.getAnzahlFall();
+    AnzahlGenesen = rcase.getAnzahlGenesen();
+    AnzahlTodesfall = rcase.getAnzahlTodesfall();
+    Bundesland = rcase.getBundesland();
+    Datenstand = rcase.getDatenstand();
+    Geschlecht = rcase.getGeschlecht();
+    IdBundesland = rcase.getIdBundesland();
+    IdLandkreis = rcase.getIdLandkreis();
+    IstErkrankungsbeginn = rcase.getIstErkrankungsbeginn();
+    Landkreis = rcase.getLandkreis();
+    Meldedatum = rcase.getMeldedatum();
+    NeuGenesen = rcase.getNeuGenesen();
+    NeuerFall = rcase.getNeuerFall();
+    NeuerTodesfall = rcase.getNeuerTodesfall();
+    Refdatum = rcase.getRefdatum();
   }
 
   @Override
@@ -53,6 +78,7 @@ public class RkiCovid19CaseDto {
         ", NeuerTodesfall=" + NeuerTodesfall +
         ", ObjectId=" + ObjectId +
         ", DatensatzDatum=" + DatensatzDatum +
+        ", Refdatum=" + Refdatum +
         '}';
   }
 }

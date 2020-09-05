@@ -1,6 +1,9 @@
 package net.xcore.ressourceserver;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.util.Optional;
+import javax.annotation.PostConstruct;
 import net.xcore.ressourceserver.rki.domain.RkiCovid19Case;
 import net.xcore.ressourceserver.rki.domain.RkiCovid19CaseDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,14 +20,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class RessourceserverApplication {
 
+  @Autowired
+  private ObjectMapper objectMapper;
+
+  @PostConstruct
+  public void setUp() {
+    objectMapper.registerModule(new JavaTimeModule());
+  }
+
   public static void main(String[] args) {
     SpringApplication.run(RessourceserverApplication.class, args);
   }
 
   @GetMapping("/hello")
-  public String hello(@RequestParam(value = "name", defaultValue ="World") String name){
+  public String hello(@RequestParam(value = "name", defaultValue = "World") String name) {
     return "Hello " + name + '!';
   }
+
   @Autowired
   CassandraTemplate cassandraTemplate;
 
