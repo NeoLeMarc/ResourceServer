@@ -3,8 +3,8 @@ package net.xcore.ressourceserver.rki.domain;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import net.xcore.ressourceserver.RKIDateAndTimeDeserializer;
-import net.xcore.ressourceserver.RKIDateAndTimeDeserializer2;
+import net.xcore.ressourceserver.rki.util.RKIDateAndTimeDeserializer;
+import net.xcore.ressourceserver.rki.util.RKIDateAndTimeDeserializer2;
 
 public class RkiCovid19CaseDto {
 
