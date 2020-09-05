@@ -1,7 +1,7 @@
 package net.xcore.ressourceserver.rki.domain;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import java.time.Instant;
+import java.time.LocalDateTime;
 import net.xcore.ressourceserver.RKIDateAndTimeDeserializer;
 import net.xcore.ressourceserver.RKIDateAndTimeDeserializer2;
 
@@ -15,29 +15,31 @@ public class RkiCovid19CaseDto {
   public int AnzahlTodesfall;
   public String Bundesland;
   @JsonDeserialize(using = RKIDateAndTimeDeserializer2.class)
-  public Instant Datenstand;
+  public LocalDateTime Datenstand;
   public String Geschlecht;
   public int IdBundesland;
   public String IdLandkreis;
   public int IstErkrankungsbeginn;
   public String Landkreis;
   @JsonDeserialize(using = RKIDateAndTimeDeserializer.class)
-  public Instant Meldedatum;
+  public LocalDateTime Meldedatum;
   public int NeuGenesen;
   public int NeuerFall;
   public int NeuerTodesfall;
   public int ObjectId;
-  public Instant DatensatzDatum;
+  public LocalDateTime DatensatzDatum;
   @JsonDeserialize(using = RKIDateAndTimeDeserializer.class)
-  public Instant Refdatum;
+  public LocalDateTime Refdatum;
 
   public RkiCovid19CaseDto() {
   }
 
   public RkiCovid19CaseDto(RkiCovid19Case rcase) {
     RkiCovid19CaseKey key = rcase.getCaseKey();
-    ObjectId = key.getObjectId();
-    DatensatzDatum = key.getDatensatzDatum();
+    if (key != null) {
+      ObjectId = key.getObjectId();
+      DatensatzDatum = key.getDatensatzDatum();
+    }
     Altersgruppe = rcase.getAltersgruppe();
     Altersgruppe2 = rcase.getAltersgruppe2();
     AnzahlFall = rcase.getAnzahlFall();

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.util.Optional;
 import javax.annotation.PostConstruct;
+import net.xcore.ressourceserver.rki.domain.RKIFeatureDto;
 import net.xcore.ressourceserver.rki.domain.RkiCovid19Case;
 import net.xcore.ressourceserver.rki.domain.RkiCovid19CaseDto;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,14 +41,25 @@ public class RessourceserverApplication {
   @Autowired
   CassandraTemplate cassandraTemplate;
 
-  @GetMapping("/rkidata")
-  public String getRkidata(){
+  @GetMapping("/rkidata/case")
+  public RkiCovid19CaseDto getRkidata() {
     Optional<RkiCovid19Case> rkiCase = cassandraTemplate.query(RkiCovid19Case.class).one();
-    return rkiCase.get().toString();
+    if (rkiCase.isPresent()) {
+      RkiCovid19Case covidCase = rkiCase.get();
+      RkiCovid19CaseDto rkiCovid19CaseDto = new RkiCovid19CaseDto(covidCase);
+      return rkiCovid19CaseDto;
+    }
+    return null;
+
   }
 
-  @PostMapping(value="/rkidata", consumes = "application/json", produces = "application/json")
-  public RkiCovid19CaseDto postRkidata(@RequestBody RkiCovid19CaseDto rkiCase) {
+  @PostMapping(value = "/rkidata/feature", consumes = "application/json", produces = "application/json")
+  public RkiCovid19CaseDto postRkiFeatureData(@RequestBody RKIFeatureDto feature) {
+    return feature.properties;
+  }
+
+  @PostMapping(value = "/rkidata/case", consumes = "application/json", produces = "application/json")
+  public RkiCovid19CaseDto postRkiCaseData(@RequestBody RkiCovid19CaseDto rkiCase) {
     return rkiCase;
   }
 }

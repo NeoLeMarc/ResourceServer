@@ -1,79 +1,127 @@
 package net.xcore.ressourceserver.rki.domain;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 import org.springframework.data.cassandra.core.mapping.PrimaryKey;
 import org.springframework.data.cassandra.core.mapping.Table;
 
 @Table("rki_covid19_case")
 public class RkiCovid19Case {
 
-  private final String altersgruppe;
-  private final String altersgruppe2;
-  private final int anzahlFall;
-  private final int anzahlGenesen;
-  private final int anzahlTodesfall;
-  private final String bundesland;
-  private final Instant datenstand;
-  private final String geschlecht;
-  private final int idBundesland;
-  private final String idLandkreis;
-  private final int istErkrankungsbeginn;
-  private final String landkreis;
-  private final Instant meldedatum;
-  private final int neuGenesen;
-  private final int neuerFall;
-  private final int neuerTodesfall;
+  private String altersgruppe;
+  private String altersgruppe2;
+  private int anzahlFall;
+  private int anzahlGenesen;
+  private int anzahlTodesfall;
+  private String bundesland;
+  private LocalDateTime datenstand;
+  private String geschlecht;
+  private int idBundesland;
+  private String idLandkreis;
+  private int istErkrankungsbeginn;
+  private String landkreis;
+  private LocalDateTime meldedatum;
+  private int neuGenesen;
+  private int neuerFall;
+  private int neuerTodesfall;
   @PrimaryKey
-  private final RkiCovid19CaseKey caseKey;
-  private final Instant refdatum;
+  private RkiCovid19CaseKey caseKey;
+  private LocalDateTime refdatum;
 
-  @SuppressWarnings("ConstructorWithTooManyParameters")
-  public RkiCovid19Case(String altersgruppe, String altersgruppe2, int anzahlFall,
-      int anzahlGenesen,
-      int anzahlTodesfall, String bundesland, Instant datenstand, String geschlecht,
-      int idBundesland, String idLandkreis, int istErkrankungsbeginn, String landkreis,
-      Instant meldedatum, int neuGenesen, int neuerFall, int neuerTodesfall,
-      RkiCovid19CaseKey caseKey, Instant refdatum) {
+  public RkiCovid19Case() {
+  }
+
+  public void setAltersgruppe(String altersgruppe) {
     this.altersgruppe = altersgruppe;
+  }
+
+  public void setAltersgruppe2(String altersgruppe2) {
     this.altersgruppe2 = altersgruppe2;
+  }
+
+  public void setAnzahlFall(int anzahlFall) {
     this.anzahlFall = anzahlFall;
+  }
+
+  public void setAnzahlGenesen(int anzahlGenesen) {
     this.anzahlGenesen = anzahlGenesen;
+  }
+
+  public void setAnzahlTodesfall(int anzahlTodesfall) {
     this.anzahlTodesfall = anzahlTodesfall;
+  }
+
+  public void setBundesland(String bundesland) {
     this.bundesland = bundesland;
+  }
+
+  public void setDatenstand(LocalDateTime datenstand) {
     this.datenstand = datenstand;
+  }
+
+  public void setGeschlecht(String geschlecht) {
     this.geschlecht = geschlecht;
+  }
+
+  public void setIdBundesland(int idBundesland) {
     this.idBundesland = idBundesland;
+  }
+
+  public void setIdLandkreis(String idLandkreis) {
     this.idLandkreis = idLandkreis;
+  }
+
+  public void setIstErkrankungsbeginn(int istErkrankungsbeginn) {
     this.istErkrankungsbeginn = istErkrankungsbeginn;
+  }
+
+  public void setLandkreis(String landkreis) {
     this.landkreis = landkreis;
+  }
+
+  public void setMeldedatum(LocalDateTime meldedatum) {
     this.meldedatum = meldedatum;
+  }
+
+  public void setNeuGenesen(int neuGenesen) {
     this.neuGenesen = neuGenesen;
+  }
+
+  public void setNeuerFall(int neuerFall) {
     this.neuerFall = neuerFall;
+  }
+
+  public void setNeuerTodesfall(int neuerTodesfall) {
     this.neuerTodesfall = neuerTodesfall;
+  }
+
+  public void setCaseKey(RkiCovid19CaseKey caseKey) {
     this.caseKey = caseKey;
+  }
+
+  public void setRefdatum(LocalDateTime refdatum) {
     this.refdatum = refdatum;
   }
 
   public RkiCovid19Case(RkiCovid19CaseDto dto) {
     RkiCovid19CaseKey key = new RkiCovid19CaseKey(dto.ObjectId, dto.DatensatzDatum);
-    this.caseKey = key;
-    this.altersgruppe = dto.Altersgruppe;
-    this.altersgruppe2 = dto.Altersgruppe2;
-    this.anzahlFall = dto.AnzahlFall;
-    this.anzahlGenesen = dto.AnzahlGenesen;
-    this.anzahlTodesfall = dto.AnzahlTodesfall;
-    this.bundesland = dto.Bundesland;
-    this.datenstand = dto.Datenstand;
-    this.geschlecht = dto.Geschlecht;
-    this.idBundesland = dto.IdBundesland;
-    this.idLandkreis = dto.IdLandkreis;
-    this.istErkrankungsbeginn = dto.IstErkrankungsbeginn;
-    this.landkreis = dto.Landkreis;
-    this.meldedatum = dto.Meldedatum;
-    this.neuGenesen = dto.NeuGenesen;
-    this.neuerFall = dto.NeuerFall;
-    this.neuerTodesfall = dto.NeuerTodesfall;
-    this.refdatum = dto.Refdatum;
+    caseKey = key;
+    altersgruppe = dto.Altersgruppe;
+    altersgruppe2 = dto.Altersgruppe2;
+    anzahlFall = dto.AnzahlFall;
+    anzahlGenesen = dto.AnzahlGenesen;
+    anzahlTodesfall = dto.AnzahlTodesfall;
+    bundesland = dto.Bundesland;
+    datenstand = dto.Datenstand;
+    geschlecht = dto.Geschlecht;
+    idBundesland = dto.IdBundesland;
+    idLandkreis = dto.IdLandkreis;
+    istErkrankungsbeginn = dto.IstErkrankungsbeginn;
+    landkreis = dto.Landkreis;
+    meldedatum = dto.Meldedatum;
+    neuGenesen = dto.NeuGenesen;
+    neuerFall = dto.NeuerFall;
+    neuerTodesfall = dto.NeuerTodesfall;
+    refdatum = dto.Refdatum;
   }
 
   public String getAltersgruppe() {
@@ -100,7 +148,7 @@ public class RkiCovid19Case {
     return bundesland;
   }
 
-  public Instant getDatenstand() {
+  public LocalDateTime getDatenstand() {
     return datenstand;
   }
 
@@ -124,7 +172,7 @@ public class RkiCovid19Case {
     return landkreis;
   }
 
-  public Instant getMeldedatum() {
+  public LocalDateTime getMeldedatum() {
     return meldedatum;
   }
 
@@ -144,11 +192,9 @@ public class RkiCovid19Case {
     return caseKey;
   }
 
-  public Instant getRefdatum() {
+  public LocalDateTime getRefdatum() {
     return refdatum;
   }
-
-  ;
 
   @Override
   public String toString() {

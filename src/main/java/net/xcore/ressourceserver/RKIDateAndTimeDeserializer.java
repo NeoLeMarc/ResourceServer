@@ -8,24 +8,25 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @SuppressWarnings("NewClassNamingConvention")
-public class RKIDateAndTimeDeserializer extends JsonDeserializer<Instant> {
+public class RKIDateAndTimeDeserializer extends JsonDeserializer<LocalDateTime> {
 
   private final SimpleDateFormat dateFormat = new SimpleDateFormat(
       "yyyy/MM/dd HH:mm:ss");
 
   @SuppressWarnings("DuplicateThrows")
   @Override
-  public Instant deserialize(JsonParser paramJsonParser,
+  public LocalDateTime deserialize(JsonParser paramJsonParser,
       DeserializationContext paramDeserializationContext)
       throws IOException, JsonProcessingException {
     String str = paramJsonParser.getText().trim();
     try {
-      return dateFormat.parse(str).toInstant();
+      LocalDateTime.from(dateFormat.parse(str).toInstant());
     } catch (ParseException e) {
       // Handle exception here
     }
-    return paramDeserializationContext.parseDate(str).toInstant();
+    return LocalDateTime.from(paramDeserializationContext.parseDate(str).toInstant());
   }
 }
