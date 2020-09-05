@@ -4,14 +4,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import java.util.Optional;
 import javax.annotation.PostConstruct;
+import net.xcore.ressourceserver.rki.dao.RkiCovid19CaseDao;
+import net.xcore.ressourceserver.rki.domain.RKIFeatureCollectionDto;
 import net.xcore.ressourceserver.rki.domain.RKIFeatureDto;
 import net.xcore.ressourceserver.rki.domain.RkiCovid19Case;
 import net.xcore.ressourceserver.rki.domain.RkiCovid19CaseDto;
-import net.xcore.ressourceserver.rki.domain.RKIFeatureCollectionDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.data.cassandra.core.CassandraTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +21,9 @@ import org.springframework.web.bind.annotation.RestController;
 @SpringBootApplication
 @RestController
 public class RessourceserverApplication {
+
+  @Autowired
+  private RkiCovid19CaseDao dao;
 
   @Autowired
   private ObjectMapper objectMapper;
@@ -39,19 +42,12 @@ public class RessourceserverApplication {
     return "Hello " + name + '!';
   }
 
-  @Autowired
-  CassandraTemplate cassandraTemplate;
 
   @GetMapping("/rkidata/case")
   public RkiCovid19CaseDto getRkidata() {
-    Optional<RkiCovid19Case> rkiCase = cassandraTemplate.query(RkiCovid19Case.class).one();
-    if (rkiCase.isPresent()) {
-      RkiCovid19Case covidCase = rkiCase.get();
+      RkiCovid19Case covidCase = dao.fetchOne();
       RkiCovid19CaseDto rkiCovid19CaseDto = new RkiCovid19CaseDto(covidCase);
       return rkiCovid19CaseDto;
-    }
-    return null;
-
   }
 
   @PostMapping(value = "/rkidata/feature", consumes = "application/json", produces = "application/json")
