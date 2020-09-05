@@ -16,9 +16,9 @@ public class RkiCovid19CaseKey {
 
   @PrimaryKeyColumn(name = "datensatzDatum", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
   @CassandraType(type = Name.TIMESTAMP)
-  private final LocalDate datensatzDatum;
+  private final LocalDateTime datensatzDatum;
 
-  public RkiCovid19CaseKey(int objectId, LocalDate datensatzDatum) {
+  public RkiCovid19CaseKey(int objectId, LocalDateTime datensatzDatum) {
     this.objectId = objectId;
     this.datensatzDatum = datensatzDatum;
   }
@@ -27,7 +27,7 @@ public class RkiCovid19CaseKey {
     return objectId;
   }
 
-  public LocalDate getDatensatzDatum() {
+  public LocalDateTime getDatensatzDatum() {
     return datensatzDatum;
   }
 }

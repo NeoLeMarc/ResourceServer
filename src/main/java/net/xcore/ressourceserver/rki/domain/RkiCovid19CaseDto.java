@@ -27,7 +27,7 @@ public class RkiCovid19CaseDto {
   public int NeuerFall;
   public int NeuerTodesfall;
   public int ObjectId;
-  public LocalDate DatensatzDatum;
+  public LocalDateTime DatensatzDatum;
   @JsonDeserialize(using = RKIDateAndTimeDeserializer.class)
   public LocalDateTime Refdatum;
 
