@@ -1,5 +1,6 @@
 package net.xcore.ressourceserver.rki.domain;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
 import org.springframework.data.cassandra.core.mapping.CassandraType;
@@ -15,9 +16,9 @@ public class RkiCovid19CaseKey {
 
   @PrimaryKeyColumn(name = "datensatzDatum", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
   @CassandraType(type = Name.TIMESTAMP)
-  private final LocalDateTime datensatzDatum;
+  private final LocalDate datensatzDatum;
 
-  public RkiCovid19CaseKey(int objectId, LocalDateTime datensatzDatum) {
+  public RkiCovid19CaseKey(int objectId, LocalDate datensatzDatum) {
     this.objectId = objectId;
     this.datensatzDatum = datensatzDatum;
   }
@@ -26,7 +27,7 @@ public class RkiCovid19CaseKey {
     return objectId;
   }
 
-  public LocalDateTime getDatensatzDatum() {
+  public LocalDate getDatensatzDatum() {
     return datensatzDatum;
   }
 }

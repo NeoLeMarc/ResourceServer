@@ -1,11 +1,11 @@
 package net.xcore.ressourceserver.rki.domain;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import net.xcore.ressourceserver.RKIDateAndTimeDeserializer;
 import net.xcore.ressourceserver.RKIDateAndTimeDeserializer2;
 
-@SuppressWarnings("FieldNamingConvention")
 public class RkiCovid19CaseDto {
 
   public String Altersgruppe;
@@ -27,7 +27,7 @@ public class RkiCovid19CaseDto {
   public int NeuerFall;
   public int NeuerTodesfall;
   public int ObjectId;
-  public LocalDateTime DatensatzDatum;
+  public LocalDate DatensatzDatum;
   @JsonDeserialize(using = RKIDateAndTimeDeserializer.class)
   public LocalDateTime Refdatum;
 
