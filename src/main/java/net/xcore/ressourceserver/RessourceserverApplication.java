@@ -9,8 +9,10 @@ import javax.annotation.PostConstruct;
 import net.xcore.ressourceserver.rki.dao.RkiCovid19CaseDao;
 import net.xcore.ressourceserver.rki.domain.RKIFeatureCollectionDto;
 import net.xcore.ressourceserver.rki.domain.RKIFeatureDto;
+import net.xcore.ressourceserver.rki.domain.cassandra.CassandraRkiCovid19Case;
 import net.xcore.ressourceserver.rki.domain.RkiCovid19Case;
 import net.xcore.ressourceserver.rki.domain.RkiCovid19CaseDto;
+import net.xcore.ressourceserver.rki.domain.cassandra.CassandraRkiCovid19CaseKey;
 import net.xcore.ressourceserver.rki.domain.RkiCovid19CaseKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -48,7 +50,7 @@ public class RessourceserverApplication {
 
   @GetMapping("/rkidata/cases")
   public List<RkiCovid19CaseDto> getRkidata() {
-    List<RkiCovid19Case> covidCases = dao.fetchAll();
+    List<? extends RkiCovid19Case> covidCases = dao.fetchAll();
     List<RkiCovid19CaseDto> dtos = new ArrayList<>();
     for (RkiCovid19Case covidCase : covidCases) {
       RkiCovid19CaseDto rkiCovid19CaseDto = new RkiCovid19CaseDto(covidCase);
@@ -71,8 +73,8 @@ public class RessourceserverApplication {
   public RKIFeatureCollectionDto postRkiFeatureCollectionData(
       @RequestBody RKIFeatureCollectionDto features) {
     for (RKIFeatureDto feature : features.features) {
-      RkiCovid19Case covid19Case = new RkiCovid19Case(feature.properties);
-      RkiCovid19CaseKey key = new RkiCovid19CaseKey(covid19Case.getCaseKey().getObjectId(),
+      RkiCovid19Case covid19Case = new CassandraRkiCovid19Case(feature.properties);
+      RkiCovid19CaseKey key = new CassandraRkiCovid19CaseKey(covid19Case.getCaseKey().getObjectId(),
           LocalDateTime.now());
       covid19Case.setCaseKey(key);
       dao.create(covid19Case);

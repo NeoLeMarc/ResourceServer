@@ -1,222 +1,78 @@
 package net.xcore.ressourceserver.rki.domain;
 
 import java.time.LocalDateTime;
-import org.springframework.data.cassandra.core.mapping.PrimaryKey;
-import org.springframework.data.cassandra.core.mapping.Table;
 
-@Table("rki_covid19_case")
-public class RkiCovid19Case {
+public interface RkiCovid19Case {
 
-  private String altersgruppe;
-  private String altersgruppe2;
-  private int anzahlFall;
-  private int anzahlGenesen;
-  private int anzahlTodesfall;
-  private String bundesland;
-  private LocalDateTime datenstand;
-  private String geschlecht;
-  private int idBundesland;
-  private String idLandkreis;
-  private int istErkrankungsbeginn;
-  private String landkreis;
-  private LocalDateTime meldedatum;
-  private int neuGenesen;
-  private int neuerFall;
-  private int neuerTodesfall;
-  @PrimaryKey
-  private RkiCovid19CaseKey caseKey;
-  private LocalDateTime refdatum;
+  void setAltersgruppe(String altersgruppe);
 
-  public RkiCovid19Case() {
-  }
+  void setAltersgruppe2(String altersgruppe2);
 
-  public void setAltersgruppe(String altersgruppe) {
-    this.altersgruppe = altersgruppe;
-  }
+  void setAnzahlFall(int anzahlFall);
 
-  public void setAltersgruppe2(String altersgruppe2) {
-    this.altersgruppe2 = altersgruppe2;
-  }
+  void setAnzahlGenesen(int anzahlGenesen);
 
-  public void setAnzahlFall(int anzahlFall) {
-    this.anzahlFall = anzahlFall;
-  }
+  void setAnzahlTodesfall(int anzahlTodesfall);
 
-  public void setAnzahlGenesen(int anzahlGenesen) {
-    this.anzahlGenesen = anzahlGenesen;
-  }
+  void setBundesland(String bundesland);
 
-  public void setAnzahlTodesfall(int anzahlTodesfall) {
-    this.anzahlTodesfall = anzahlTodesfall;
-  }
+  void setDatenstand(LocalDateTime datenstand);
 
-  public void setBundesland(String bundesland) {
-    this.bundesland = bundesland;
-  }
+  void setGeschlecht(String geschlecht);
 
-  public void setDatenstand(LocalDateTime datenstand) {
-    this.datenstand = datenstand;
-  }
+  void setIdBundesland(int idBundesland);
 
-  public void setGeschlecht(String geschlecht) {
-    this.geschlecht = geschlecht;
-  }
+  void setIdLandkreis(String idLandkreis);
 
-  public void setIdBundesland(int idBundesland) {
-    this.idBundesland = idBundesland;
-  }
+  void setIstErkrankungsbeginn(int istErkrankungsbeginn);
 
-  public void setIdLandkreis(String idLandkreis) {
-    this.idLandkreis = idLandkreis;
-  }
+  void setLandkreis(String landkreis);
 
-  public void setIstErkrankungsbeginn(int istErkrankungsbeginn) {
-    this.istErkrankungsbeginn = istErkrankungsbeginn;
-  }
+  void setMeldedatum(LocalDateTime meldedatum);
 
-  public void setLandkreis(String landkreis) {
-    this.landkreis = landkreis;
-  }
+  void setNeuGenesen(int neuGenesen);
 
-  public void setMeldedatum(LocalDateTime meldedatum) {
-    this.meldedatum = meldedatum;
-  }
+  void setNeuerFall(int neuerFall);
 
-  public void setNeuGenesen(int neuGenesen) {
-    this.neuGenesen = neuGenesen;
-  }
+  void setNeuerTodesfall(int neuerTodesfall);
 
-  public void setNeuerFall(int neuerFall) {
-    this.neuerFall = neuerFall;
-  }
+  void setCaseKey(RkiCovid19CaseKey caseKey);
 
-  public void setNeuerTodesfall(int neuerTodesfall) {
-    this.neuerTodesfall = neuerTodesfall;
-  }
+  void setRefdatum(LocalDateTime refdatum);
 
-  public void setCaseKey(RkiCovid19CaseKey caseKey) {
-    this.caseKey = caseKey;
-  }
+  String getAltersgruppe();
 
-  public void setRefdatum(LocalDateTime refdatum) {
-    this.refdatum = refdatum;
-  }
+  String getAltersgruppe2();
 
-  public RkiCovid19Case(RkiCovid19CaseDto dto) {
-    RkiCovid19CaseKey key = new RkiCovid19CaseKey(dto.ObjectId, dto.DatensatzDatum);
-    caseKey = key;
-    altersgruppe = dto.Altersgruppe;
-    altersgruppe2 = dto.Altersgruppe2;
-    anzahlFall = dto.AnzahlFall;
-    anzahlGenesen = dto.AnzahlGenesen;
-    anzahlTodesfall = dto.AnzahlTodesfall;
-    bundesland = dto.Bundesland;
-    datenstand = dto.Datenstand;
-    geschlecht = dto.Geschlecht;
-    idBundesland = dto.IdBundesland;
-    idLandkreis = dto.IdLandkreis;
-    istErkrankungsbeginn = dto.IstErkrankungsbeginn;
-    landkreis = dto.Landkreis;
-    meldedatum = dto.Meldedatum;
-    neuGenesen = dto.NeuGenesen;
-    neuerFall = dto.NeuerFall;
-    neuerTodesfall = dto.NeuerTodesfall;
-    refdatum = dto.Refdatum;
-  }
+  int getAnzahlFall();
 
-  public String getAltersgruppe() {
-    return altersgruppe;
-  }
+  int getAnzahlGenesen();
 
-  public String getAltersgruppe2() {
-    return altersgruppe2;
-  }
+  int getAnzahlTodesfall();
 
-  public int getAnzahlFall() {
-    return anzahlFall;
-  }
+  String getBundesland();
 
-  public int getAnzahlGenesen() {
-    return anzahlGenesen;
-  }
+  LocalDateTime getDatenstand();
 
-  public int getAnzahlTodesfall() {
-    return anzahlTodesfall;
-  }
+  String getGeschlecht();
 
-  public String getBundesland() {
-    return bundesland;
-  }
+  int getIdBundesland();
 
-  public LocalDateTime getDatenstand() {
-    return datenstand;
-  }
+  String getIdLandkreis();
 
-  public String getGeschlecht() {
-    return geschlecht;
-  }
+  int getIstErkrankungsbeginn();
 
-  public int getIdBundesland() {
-    return idBundesland;
-  }
+  String getLandkreis();
 
-  public String getIdLandkreis() {
-    return idLandkreis;
-  }
+  LocalDateTime getMeldedatum();
 
-  public int getIstErkrankungsbeginn() {
-    return istErkrankungsbeginn;
-  }
+  int getNeuGenesen();
 
-  public String getLandkreis() {
-    return landkreis;
-  }
+  int getNeuerFall();
 
-  public LocalDateTime getMeldedatum() {
-    return meldedatum;
-  }
+  int getNeuerTodesfall();
 
-  public int getNeuGenesen() {
-    return neuGenesen;
-  }
+  RkiCovid19CaseKey getCaseKey();
 
-  public int getNeuerFall() {
-    return neuerFall;
-  }
-
-  public int getNeuerTodesfall() {
-    return neuerTodesfall;
-  }
-
-  public RkiCovid19CaseKey getCaseKey() {
-    return caseKey;
-  }
-
-  public LocalDateTime getRefdatum() {
-    return refdatum;
-  }
-
-  @Override
-  public String toString() {
-    return "RkiCovid19Case{" +
-        "altersgruppe='" + altersgruppe + '\'' +
-        ", altersgruppe2='" + altersgruppe2 + '\'' +
-        ", anzahlFall=" + anzahlFall +
-        ", anzahlGenesen=" + anzahlGenesen +
-        ", anzahlTodesfall=" + anzahlTodesfall +
-        ", bundesland='" + bundesland + '\'' +
-        ", datenstand=" + datenstand +
-        ", geschlecht='" + geschlecht + '\'' +
-        ", idBundesland=" + idBundesland +
-        ", idLandkreis='" + idLandkreis + '\'' +
-        ", istErkrankungsbeginn=" + istErkrankungsbeginn +
-        ", landkreis='" + landkreis + '\'' +
-        ", meldedatum=" + meldedatum +
-        ", neuGenesen=" + neuGenesen +
-        ", neuerFall=" + neuerFall +
-        ", neuerTodesfall=" + neuerTodesfall +
-        ", caseKey=" + caseKey +
-        ", refdatum=" + refdatum +
-        '}';
-  }
+  LocalDateTime getRefdatum();
 }

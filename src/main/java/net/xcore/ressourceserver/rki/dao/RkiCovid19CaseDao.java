@@ -2,6 +2,7 @@ package net.xcore.ressourceserver.rki.dao;
 
 import java.util.List;
 import java.util.Optional;
+import net.xcore.ressourceserver.rki.domain.cassandra.CassandraRkiCovid19Case;
 import net.xcore.ressourceserver.rki.domain.RkiCovid19Case;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.cassandra.core.CassandraTemplate;
@@ -14,7 +15,7 @@ public class RkiCovid19CaseDao {
   private CassandraTemplate cassandraTemplate;
 
   public RkiCovid19Case fetchOne() {
-    Optional<RkiCovid19Case> rkiCase = cassandraTemplate.query(RkiCovid19Case.class).one();
+    Optional<? extends RkiCovid19Case> rkiCase = cassandraTemplate.query(CassandraRkiCovid19Case.class).one();
     if (rkiCase.isPresent()) {
       RkiCovid19Case covidCase = rkiCase.get();
       return covidCase;
@@ -22,8 +23,8 @@ public class RkiCovid19CaseDao {
     return null;
   }
 
-  public List<RkiCovid19Case> fetchAll() {
-    return cassandraTemplate.query(RkiCovid19Case.class).all();
+  public List<? extends RkiCovid19Case> fetchAll() {
+    return cassandraTemplate.query(CassandraRkiCovid19Case.class).all();
   }
 
   public void create(RkiCovid19Case covid19Case) {
