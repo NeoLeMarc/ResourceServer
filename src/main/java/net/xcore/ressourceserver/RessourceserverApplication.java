@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 import net.xcore.ressourceserver.rki.domain.RKIFeatureDto;
 import net.xcore.ressourceserver.rki.domain.RkiCovid19Case;
 import net.xcore.ressourceserver.rki.domain.RkiCovid19CaseDto;
+import net.xcore.ressourceserver.rki.domain.RKIFeatureCollectionDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -61,5 +62,11 @@ public class RessourceserverApplication {
   @PostMapping(value = "/rkidata/case", consumes = "application/json", produces = "application/json")
   public RkiCovid19CaseDto postRkiCaseData(@RequestBody RkiCovid19CaseDto rkiCase) {
     return rkiCase;
+  }
+
+  @PostMapping(value = "/rkidata/features", consumes = "application/json", produces = "application/json")
+  public RKIFeatureCollectionDto postRkiFeatureCollectionData(
+      @RequestBody RKIFeatureCollectionDto features) {
+    return features;
   }
 }
