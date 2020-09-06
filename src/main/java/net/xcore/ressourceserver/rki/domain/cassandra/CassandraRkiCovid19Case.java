@@ -27,7 +27,7 @@ public class CassandraRkiCovid19Case implements RkiCovid19Case {
   private int neuerFall;
   private int neuerTodesfall;
   @PrimaryKey
-  private RkiCovid19CaseKey caseKey;
+  private CassandraRkiCovid19CaseKey caseKey;
   private LocalDateTime refdatum;
 
   public CassandraRkiCovid19Case() {
@@ -115,7 +115,7 @@ public class CassandraRkiCovid19Case implements RkiCovid19Case {
 
   @Override
   public void setCaseKey(RkiCovid19CaseKey caseKey) {
-    this.caseKey = caseKey;
+    this.caseKey = new CassandraRkiCovid19CaseKey(caseKey);
   }
 
   @Override
@@ -125,7 +125,7 @@ public class CassandraRkiCovid19Case implements RkiCovid19Case {
 
   public CassandraRkiCovid19Case(RkiCovid19CaseDto dto) {
     RkiCovid19CaseKey key = new CassandraRkiCovid19CaseKey(dto.ObjectId, dto.DatensatzDatum);
-    caseKey = key;
+    caseKey = new CassandraRkiCovid19CaseKey(key);
     altersgruppe = dto.Altersgruppe;
     altersgruppe2 = dto.Altersgruppe2;
     anzahlFall = dto.AnzahlFall;

@@ -16,7 +16,7 @@ public class CassandraRkiCovid19CaseDao {
 
   public RkiCovid19Case fetchOne() {
     Optional<? extends RkiCovid19Case> rkiCase = cassandraTemplate
-        .query(CassandraRkiCovid19Case.class).one();
+        .query(CassandraRkiCovid19Case.class).first();
     if (rkiCase.isPresent()) {
       RkiCovid19Case covidCase = rkiCase.get();
       return covidCase;

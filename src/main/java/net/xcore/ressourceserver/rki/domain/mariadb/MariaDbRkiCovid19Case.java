@@ -15,6 +15,7 @@ import net.xcore.ressourceserver.rki.domain.RkiCovid19CaseKey;
 @Table(name = "rki_covid19_case")
 public class MariaDbRkiCovid19Case implements RkiCovid19Case, Serializable {
 
+  @Column(name = "Altersgruppe")
   private String altersgruppe;
   @Column(name = "Altersgruppe2")
   private String altersgruppe2;
@@ -54,6 +55,27 @@ public class MariaDbRkiCovid19Case implements RkiCovid19Case, Serializable {
   private MariaDbRkiCovid19CaseKey caseKey;
   @Column(name = "RefDatum")
   private LocalDateTime refDatum;
+
+  public MariaDbRkiCovid19Case(RkiCovid19Case covidCase) {
+    caseKey = new MariaDbRkiCovid19CaseKey(covidCase.getCaseKey());
+    altersgruppe = covidCase.getAltersgruppe();
+    altersgruppe2 = covidCase.getAltersgruppe2();
+    anzahlFall = covidCase.getAnzahlFall();
+    anzahlGenesen = covidCase.getAnzahlGenesen();
+    anzahlTodesfall = covidCase.getAnzahlTodesfall();
+    bundesland = covidCase.getBundesland();
+    datenstand = covidCase.getDatenstand();
+    geschlecht = covidCase.getGeschlecht();
+    idBundesland = covidCase.getIdBundesland();
+    idLandkreis = covidCase.getIdLandkreis();
+    istErkrankungsbeginn = covidCase.getIstErkrankungsbeginn();
+    landkreis = covidCase.getLandkreis();
+    meldedatum = covidCase.getMeldedatum();
+    neuerFall = covidCase.getNeuerFall();
+    neuerTodesfall = covidCase.getNeuerTodesfall();
+    neuGenesen = covidCase.getNeuGenesen();
+    refDatum = covidCase.getRefdatum();
+  }
 
   @Override
   public void setAltersgruppe(String altersgruppe) {
@@ -141,7 +163,6 @@ public class MariaDbRkiCovid19Case implements RkiCovid19Case, Serializable {
   }
 
   @Override
-  @Column(name = "Altersgruppe")
   public String getAltersgruppe() {
     return altersgruppe;
   }

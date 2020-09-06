@@ -15,6 +15,9 @@ import net.xcore.ressourceserver.rki.domain.RkiCovid19CaseDto;
 import net.xcore.ressourceserver.rki.domain.RkiCovid19CaseKey;
 import net.xcore.ressourceserver.rki.domain.cassandra.CassandraRkiCovid19Case;
 import net.xcore.ressourceserver.rki.domain.cassandra.CassandraRkiCovid19CaseKey;
+import net.xcore.ressourceserver.rki.domain.mariadb.MariaDbRkiCovid19Case;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -27,6 +30,8 @@ import org.springframework.web.bind.annotation.RestController;
 @SpringBootApplication
 @RestController
 public class RessourceserverApplication {
+
+  Logger logger = LoggerFactory.getLogger(RessourceserverApplication.class);
 
   @Autowired
   private CassandraRkiCovid19CaseDao dao;
@@ -60,6 +65,14 @@ public class RessourceserverApplication {
     return dtos;
   }
 
+  @GetMapping("/rkidata/case")
+  public RkiCovid19CaseDto getRkidataCase() {
+    RkiCovid19Case covidCase = dao.fetchOne();
+    RkiCovid19CaseDto dto = new RkiCovid19CaseDto((covidCase));
+    return dto;
+  }
+
+
   private static List<RkiCovid19CaseDto> makeRkiCovid19CaseDtos(
       Iterable<? extends RkiCovid19Case> covidCases) {
     List<RkiCovid19CaseDto> dtos = new ArrayList<>();
@@ -76,6 +89,24 @@ public class RessourceserverApplication {
     List<RkiCovid19CaseDto> dtos = makeRkiCovid19CaseDtos(
         covidCases);
     return dtos;
+  }
+
+
+
+  @PostMapping("/rkidata/relational/sync")
+  public String triggerRkiRelationalSync() {
+    List<? extends RkiCovid19Case> covidCases = dao.fetchAll();
+    int i = 0;
+    logger.info("Started relational database sync");
+    for (RkiCovid19Case covidCase : covidCases) {
+      MariaDbRkiCovid19Case mariaDbRkiCovid19Case = new MariaDbRkiCovid19Case(covidCase);
+      repository.save(mariaDbRkiCovid19Case);
+      if (i++ % 1000 == 0) {
+        logger.info("Synced {} datasets to relational database", i);
+      }
+    }
+    logger.info("Finished relational database sync");
+    return "OK";
   }
 
   @PostMapping(value = "/rkidata/feature", consumes = "application/json", produces = "application/json")
