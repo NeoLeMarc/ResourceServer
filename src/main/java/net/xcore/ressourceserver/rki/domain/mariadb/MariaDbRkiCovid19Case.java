@@ -48,6 +48,9 @@ public class MariaDbRkiCovid19Case implements RkiCovid19Case, Serializable {
   @Column(name = "NeuerTodesfall")
   private int neuerTodesfall;
 
+  public MariaDbRkiCovid19Case() {
+  }
+
   @EmbeddedId
   @AttributeOverrides({
       @AttributeOverride(name = "objectId", column = @Column(name = "ObjectId")),

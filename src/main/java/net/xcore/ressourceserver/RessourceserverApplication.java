@@ -92,19 +92,21 @@ public class RessourceserverApplication {
   }
 
 
-
   @PostMapping("/rkidata/relational/sync")
   public String triggerRkiRelationalSync() {
     List<? extends RkiCovid19Case> covidCases = dao.fetchAll();
-    int i = 0;
+    List<MariaDbRkiCovid19Case> mariaDbCovidCases = new ArrayList<>();
     logger.info("Started relational database sync");
+    int i = 0;
     for (RkiCovid19Case covidCase : covidCases) {
-      MariaDbRkiCovid19Case mariaDbRkiCovid19Case = new MariaDbRkiCovid19Case(covidCase);
-      repository.save(mariaDbRkiCovid19Case);
-      if (i++ % 1000 == 0) {
-        logger.info("Synced {} datasets to relational database", i);
+      mariaDbCovidCases.add(new MariaDbRkiCovid19Case(covidCase));
+      if(i++ % 1000 == 0){
+        repository.saveAll(mariaDbCovidCases);
+        mariaDbCovidCases = new ArrayList<>();
+        logger.info("Synced {} entries to relational database", i);
       }
     }
+    repository.saveAll(mariaDbCovidCases);
     logger.info("Finished relational database sync");
     return "OK";
   }
