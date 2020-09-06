@@ -9,10 +9,10 @@ import net.xcore.ressourceserver.rki.domain.RkiCovid19CaseKey;
 @Embeddable
 public class MariaDbRkiCovid19CaseKey implements RkiCovid19CaseKey, Serializable {
 
-  @Column
+  @Column(name = "ObjectId")
   private int objectId;
 
-  @Column
+  @Column(name = "DatensatzDatum")
   private LocalDateTime datensatzDatum;
 
   public void setObjectId(int objectId) {

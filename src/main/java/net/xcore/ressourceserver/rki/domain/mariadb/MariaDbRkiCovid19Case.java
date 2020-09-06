@@ -2,6 +2,9 @@ package net.xcore.ressourceserver.rki.domain.mariadb;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -12,24 +15,44 @@ import net.xcore.ressourceserver.rki.domain.RkiCovid19CaseKey;
 @Table(name = "rki_covid19_case")
 public class MariaDbRkiCovid19Case implements RkiCovid19Case, Serializable {
 
+  @Column(name = "Altersgruppe")
   private String altersgruppe;
+  @Column(name = "Altersgruppe2")
   private String altersgruppe2;
+  @Column(name = "AnzahlFall")
   private int anzahlFall;
+  @Column(name = "AnzahlGenesen")
   private int anzahlGenesen;
+  @Column(name = "AnzahlTodesfall")
   private int anzahlTodesfall;
+  @Column(name = "Bundesland")
   private String bundesland;
+  @Column(name = "Datenstand")
   private LocalDateTime datenstand;
+  @Column(name = "Geschlecht")
   private String geschlecht;
+  @Column(name = "IdBundesland")
   private int idBundesland;
+  @Column(name = "IdLandkreis")
   private String idLandkreis;
+  @Column(name = "IstErkrankungsbeginn")
   private int istErkrankungsbeginn;
+  @Column(name = "Landkreis")
   private String landkreis;
+  @Column(name = "Meldedatum")
   private LocalDateTime meldedatum;
+  @Column(name = "NeuGenesen")
   private int neuGenesen;
+  @Column(name = "NeuerFall")
   private int neuerFall;
+  @Column(name = "NeuerTodesfall")
   private int neuerTodesfall;
   @EmbeddedId
+  @AttributeOverrides({
+      @AttributeOverride(name = "objectId", column = @Column(name = "ObjectId")),
+      @AttributeOverride(name = "datensatzDatum", column = @Column(name = "DatensatzDatum"))})
   private MariaDbRkiCovid19CaseKey caseKey;
+  @Column(name = "RefDatum")
   private LocalDateTime refDatum;
 
   @Override

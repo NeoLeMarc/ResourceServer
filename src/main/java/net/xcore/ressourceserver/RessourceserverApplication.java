@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import net.xcore.ressourceserver.rki.dao.CassandraRkiCovid19CaseDao;
+import net.xcore.ressourceserver.rki.dao.MariaDbCovid19CaseRepository;
 import net.xcore.ressourceserver.rki.domain.RKIFeatureCollectionDto;
 import net.xcore.ressourceserver.rki.domain.RKIFeatureDto;
 import net.xcore.ressourceserver.rki.domain.RkiCovid19Case;
@@ -33,6 +34,9 @@ public class RessourceserverApplication {
   @Autowired
   private ObjectMapper objectMapper;
 
+  @Autowired
+  private MariaDbCovid19CaseRepository repository;
+
   @PostConstruct
   public void setUp() {
     objectMapper.registerModule(new JavaTimeModule());
@@ -51,11 +55,26 @@ public class RessourceserverApplication {
   @GetMapping("/rkidata/cases")
   public List<RkiCovid19CaseDto> getRkidata() {
     List<? extends RkiCovid19Case> covidCases = dao.fetchAll();
+    List<RkiCovid19CaseDto> dtos = makeRkiCovid19CaseDtos(
+        covidCases);
+    return dtos;
+  }
+
+  private static List<RkiCovid19CaseDto> makeRkiCovid19CaseDtos(
+      Iterable<? extends RkiCovid19Case> covidCases) {
     List<RkiCovid19CaseDto> dtos = new ArrayList<>();
     for (RkiCovid19Case covidCase : covidCases) {
       RkiCovid19CaseDto rkiCovid19CaseDto = new RkiCovid19CaseDto(covidCase);
       dtos.add(rkiCovid19CaseDto);
     }
+    return dtos;
+  }
+
+  @GetMapping("/rkidata/relational/cases")
+  public List<RkiCovid19CaseDto> getRkiRelationalData() {
+    Iterable<? extends RkiCovid19Case> covidCases = repository.findAll();
+    List<RkiCovid19CaseDto> dtos = makeRkiCovid19CaseDtos(
+        covidCases);
     return dtos;
   }
 
