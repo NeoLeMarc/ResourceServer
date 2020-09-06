@@ -12,15 +12,31 @@ import org.springframework.data.cassandra.core.mapping.PrimaryKeyColumn;
 public class CassandraRkiCovid19CaseKey implements RkiCovid19CaseKey {
 
   @PrimaryKeyColumn(name = "objectId", ordinal = 1, type = PrimaryKeyType.CLUSTERED)
-  private final int objectId;
+  private int objectId;
+
+  public CassandraRkiCovid19CaseKey() {
+  }
+
+  public void setObjectId(int objectId) {
+    this.objectId = objectId;
+  }
+
+  public void setDatensatzDatum(LocalDateTime datensatzDatum) {
+    this.datensatzDatum = datensatzDatum;
+  }
 
   @PrimaryKeyColumn(name = "datensatzDatum", ordinal = 0, type = PrimaryKeyType.PARTITIONED)
   @CassandraType(type = Name.TIMESTAMP)
-  private final LocalDateTime datensatzDatum;
+  private LocalDateTime datensatzDatum;
 
   public CassandraRkiCovid19CaseKey(int objectId, LocalDateTime datensatzDatum) {
     this.objectId = objectId;
     this.datensatzDatum = datensatzDatum;
+  }
+
+  public CassandraRkiCovid19CaseKey(RkiCovid19CaseKey caseKey) {
+    datensatzDatum = caseKey.getDatensatzDatum();
+    objectId = caseKey.getObjectId();
   }
 
   @Override

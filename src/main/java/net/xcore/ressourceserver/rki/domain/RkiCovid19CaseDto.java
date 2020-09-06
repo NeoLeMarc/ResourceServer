@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.time.LocalDateTime;
 import net.xcore.ressourceserver.rki.util.RKIDateAndTimeDeserializer;
 import net.xcore.ressourceserver.rki.util.RKIDateAndTimeDeserializer2;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RkiCovid19CaseDto {
 
@@ -30,6 +32,7 @@ public class RkiCovid19CaseDto {
   @JsonDeserialize(using = RKIDateAndTimeDeserializer.class)
   public LocalDateTime Refdatum;
 
+  private Logger logger = LoggerFactory.getLogger(RkiCovid19CaseDto.class);
   public RkiCovid19CaseDto() {
   }
 
@@ -38,6 +41,8 @@ public class RkiCovid19CaseDto {
     if (key != null) {
       ObjectId = key.getObjectId();
       DatensatzDatum = key.getDatensatzDatum();
+    } else {
+      logger.warn("Warning, got empty case key");
     }
     Altersgruppe = rcase.getAltersgruppe();
     Altersgruppe2 = rcase.getAltersgruppe2();

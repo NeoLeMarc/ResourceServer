@@ -1,29 +1,84 @@
 package net.xcore.ressourceserver.rki.domain.mariadb;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import net.xcore.ressourceserver.rki.domain.RkiCovid19Case;
 import net.xcore.ressourceserver.rki.domain.RkiCovid19CaseKey;
 
-public class MariaDbRkiCovid19Case implements RkiCovid19Case {
+@Entity
+@Table(name = "rki_covid19_case")
+public class MariaDbRkiCovid19Case implements RkiCovid19Case, Serializable {
 
+  @Column(name = "Altersgruppe")
   private String altersgruppe;
+  @Column(name = "Altersgruppe2")
   private String altersgruppe2;
+  @Column(name = "AnzahlFall")
   private int anzahlFall;
+  @Column(name = "AnzahlGenesen")
   private int anzahlGenesen;
+  @Column(name = "AnzahlTodesfall")
   private int anzahlTodesfall;
+  @Column(name = "Bundesland")
   private String bundesland;
+  @Column(name = "Datenstand")
   private LocalDateTime datenstand;
+  @Column(name = "Geschlecht")
   private String geschlecht;
+  @Column(name = "IdBundesland")
   private int idBundesland;
+  @Column(name = "IdLandkreis")
   private String idLandkreis;
+  @Column(name = "IstErkrankungsbeginn")
   private int istErkrankungsbeginn;
+  @Column(name = "Landkreis")
   private String landkreis;
+  @Column(name = "Meldedatum")
   private LocalDateTime meldedatum;
+  @Column(name = "NeuGenesen")
   private int neuGenesen;
+  @Column(name = "NeuerFall")
   private int neuerFall;
+  @Column(name = "NeuerTodesfall")
   private int neuerTodesfall;
-  private RkiCovid19CaseKey caseKey;
+
+  public MariaDbRkiCovid19Case() {
+  }
+
+  @EmbeddedId
+  @AttributeOverrides({
+      @AttributeOverride(name = "objectId", column = @Column(name = "ObjectId")),
+      @AttributeOverride(name = "datensatzDatum", column = @Column(name = "DatensatzDatum"))})
+  private MariaDbRkiCovid19CaseKey caseKey;
+  @Column(name = "RefDatum")
   private LocalDateTime refDatum;
+
+  public MariaDbRkiCovid19Case(RkiCovid19Case covidCase) {
+    caseKey = new MariaDbRkiCovid19CaseKey(covidCase.getCaseKey());
+    altersgruppe = covidCase.getAltersgruppe();
+    altersgruppe2 = covidCase.getAltersgruppe2();
+    anzahlFall = covidCase.getAnzahlFall();
+    anzahlGenesen = covidCase.getAnzahlGenesen();
+    anzahlTodesfall = covidCase.getAnzahlTodesfall();
+    bundesland = covidCase.getBundesland();
+    datenstand = covidCase.getDatenstand();
+    geschlecht = covidCase.getGeschlecht();
+    idBundesland = covidCase.getIdBundesland();
+    idLandkreis = covidCase.getIdLandkreis();
+    istErkrankungsbeginn = covidCase.getIstErkrankungsbeginn();
+    landkreis = covidCase.getLandkreis();
+    meldedatum = covidCase.getMeldedatum();
+    neuerFall = covidCase.getNeuerFall();
+    neuerTodesfall = covidCase.getNeuerTodesfall();
+    neuGenesen = covidCase.getNeuGenesen();
+    refDatum = covidCase.getRefdatum();
+  }
 
   @Override
   public void setAltersgruppe(String altersgruppe) {
@@ -103,11 +158,6 @@ public class MariaDbRkiCovid19Case implements RkiCovid19Case {
   @Override
   public void setNeuerTodesfall(int neuerTodesfall) {
     this.neuerTodesfall = neuerTodesfall;
-  }
-
-  @Override
-  public void setCaseKey(RkiCovid19CaseKey caseKey) {
-    this.caseKey = caseKey;
   }
 
   @Override
@@ -198,6 +248,11 @@ public class MariaDbRkiCovid19Case implements RkiCovid19Case {
   @Override
   public RkiCovid19CaseKey getCaseKey() {
     return caseKey;
+  }
+
+  @Override
+  public void setCaseKey(RkiCovid19CaseKey caseKey) {
+    this.caseKey = new MariaDbRkiCovid19CaseKey(caseKey);
   }
 
   @Override
