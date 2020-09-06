@@ -1,10 +1,16 @@
 package net.xcore.ressourceserver.rki.domain.mariadb;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Table;
 import net.xcore.ressourceserver.rki.domain.RkiCovid19Case;
 import net.xcore.ressourceserver.rki.domain.RkiCovid19CaseKey;
 
-public class MariaDbRkiCovid19Case implements RkiCovid19Case {
+@Entity
+@Table(name = "rki_covid19_case")
+public class MariaDbRkiCovid19Case implements RkiCovid19Case, Serializable {
 
   private String altersgruppe;
   private String altersgruppe2;
@@ -22,7 +28,8 @@ public class MariaDbRkiCovid19Case implements RkiCovid19Case {
   private int neuGenesen;
   private int neuerFall;
   private int neuerTodesfall;
-  private RkiCovid19CaseKey caseKey;
+  @EmbeddedId
+  private MariaDbRkiCovid19CaseKey caseKey;
   private LocalDateTime refDatum;
 
   @Override
@@ -103,11 +110,6 @@ public class MariaDbRkiCovid19Case implements RkiCovid19Case {
   @Override
   public void setNeuerTodesfall(int neuerTodesfall) {
     this.neuerTodesfall = neuerTodesfall;
-  }
-
-  @Override
-  public void setCaseKey(RkiCovid19CaseKey caseKey) {
-    this.caseKey = caseKey;
   }
 
   @Override
@@ -198,6 +200,11 @@ public class MariaDbRkiCovid19Case implements RkiCovid19Case {
   @Override
   public RkiCovid19CaseKey getCaseKey() {
     return caseKey;
+  }
+
+  @Override
+  public void setCaseKey(RkiCovid19CaseKey caseKey) {
+    this.caseKey = new MariaDbRkiCovid19CaseKey(caseKey);
   }
 
   @Override

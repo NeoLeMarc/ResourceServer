@@ -6,14 +6,14 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import net.xcore.ressourceserver.rki.dao.RkiCovid19CaseDao;
+import net.xcore.ressourceserver.rki.dao.CassandraRkiCovid19CaseDao;
 import net.xcore.ressourceserver.rki.domain.RKIFeatureCollectionDto;
 import net.xcore.ressourceserver.rki.domain.RKIFeatureDto;
-import net.xcore.ressourceserver.rki.domain.cassandra.CassandraRkiCovid19Case;
 import net.xcore.ressourceserver.rki.domain.RkiCovid19Case;
 import net.xcore.ressourceserver.rki.domain.RkiCovid19CaseDto;
-import net.xcore.ressourceserver.rki.domain.cassandra.CassandraRkiCovid19CaseKey;
 import net.xcore.ressourceserver.rki.domain.RkiCovid19CaseKey;
+import net.xcore.ressourceserver.rki.domain.cassandra.CassandraRkiCovid19Case;
+import net.xcore.ressourceserver.rki.domain.cassandra.CassandraRkiCovid19CaseKey;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class RessourceserverApplication {
 
   @Autowired
-  private RkiCovid19CaseDao dao;
+  private CassandraRkiCovid19CaseDao dao;
 
   @Autowired
   private ObjectMapper objectMapper;
