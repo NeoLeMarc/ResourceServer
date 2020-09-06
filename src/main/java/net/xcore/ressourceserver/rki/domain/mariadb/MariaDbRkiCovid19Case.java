@@ -15,7 +15,6 @@ import net.xcore.ressourceserver.rki.domain.RkiCovid19CaseKey;
 @Table(name = "rki_covid19_case")
 public class MariaDbRkiCovid19Case implements RkiCovid19Case, Serializable {
 
-  @Column(name = "Altersgruppe")
   private String altersgruppe;
   @Column(name = "Altersgruppe2")
   private String altersgruppe2;
@@ -47,6 +46,7 @@ public class MariaDbRkiCovid19Case implements RkiCovid19Case, Serializable {
   private int neuerFall;
   @Column(name = "NeuerTodesfall")
   private int neuerTodesfall;
+
   @EmbeddedId
   @AttributeOverrides({
       @AttributeOverride(name = "objectId", column = @Column(name = "ObjectId")),
@@ -141,6 +141,7 @@ public class MariaDbRkiCovid19Case implements RkiCovid19Case, Serializable {
   }
 
   @Override
+  @Column(name = "Altersgruppe")
   public String getAltersgruppe() {
     return altersgruppe;
   }
