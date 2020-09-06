@@ -1,0 +1,22 @@
+CREATE TABLE rki_covid19_case (
+        Altersgruppe           varchar(20),
+        Altersgruppe2          varchar(20),
+        AnzahlFall             int,
+        AnzahlGenesen          int,
+        AnzahlTodesfall        int,
+        Bundesland             varchar(30),
+        Datenstand             datetime,
+        Geschlecht             varchar(15),
+        IdBundesland           int,
+        IdLandkreis            varchar(15),
+        IstErkrankungsbeginn   int,
+        Landkreis              varchar(30),
+        Meldedatum             datetime,
+        NeuGenesen             int,
+        NeuerFall              int,
+        NeuerTodesfall         int,
+        ObjectId               int,
+        Refdatum               datetime,
+        DatensatzDatum         date,
+        PRIMARY KEY(DatensatzDatum, ObjectId)
+);
