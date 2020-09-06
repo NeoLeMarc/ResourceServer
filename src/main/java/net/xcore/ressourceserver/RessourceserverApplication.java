@@ -10,8 +10,10 @@ import net.xcore.ressourceserver.rki.dao.CassandraRkiCovid19CaseDao;
 import net.xcore.ressourceserver.rki.dao.MariaDbCovid19CaseRepository;
 import net.xcore.ressourceserver.rki.domain.RKIFeatureCollectionDto;
 import net.xcore.ressourceserver.rki.domain.RKIFeatureDto;
+import net.xcore.ressourceserver.rki.domain.cassandra.CassandraRkiCovid19Case;
 import net.xcore.ressourceserver.rki.domain.RkiCovid19Case;
 import net.xcore.ressourceserver.rki.domain.RkiCovid19CaseDto;
+import net.xcore.ressourceserver.rki.domain.cassandra.CassandraRkiCovid19CaseKey;
 import net.xcore.ressourceserver.rki.domain.RkiCovid19CaseKey;
 import net.xcore.ressourceserver.rki.domain.cassandra.CassandraRkiCovid19Case;
 import net.xcore.ressourceserver.rki.domain.cassandra.CassandraRkiCovid19CaseKey;
@@ -60,6 +62,8 @@ public class RessourceserverApplication {
   @GetMapping("/rkidata/cases")
   public List<RkiCovid19CaseDto> getRkidata() {
     List<? extends RkiCovid19Case> covidCases = dao.fetchAll();
+<<<<<<< HEAD
+=======
     List<RkiCovid19CaseDto> dtos = makeRkiCovid19CaseDtos(
         covidCases);
     return dtos;
@@ -75,6 +79,7 @@ public class RessourceserverApplication {
 
   private static List<RkiCovid19CaseDto> makeRkiCovid19CaseDtos(
       Iterable<? extends RkiCovid19Case> covidCases) {
+>>>>>>> cd2b0638d4cc23a6b558e615c1b5ab4346910220
     List<RkiCovid19CaseDto> dtos = new ArrayList<>();
     for (RkiCovid19Case covidCase : covidCases) {
       RkiCovid19CaseDto rkiCovid19CaseDto = new RkiCovid19CaseDto(covidCase);
