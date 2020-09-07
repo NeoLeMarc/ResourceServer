@@ -10,10 +10,8 @@ import net.xcore.ressourceserver.rki.dao.CassandraRkiCovid19CaseDao;
 import net.xcore.ressourceserver.rki.dao.MariaDbCovid19CaseRepository;
 import net.xcore.ressourceserver.rki.domain.RKIFeatureCollectionDto;
 import net.xcore.ressourceserver.rki.domain.RKIFeatureDto;
-import net.xcore.ressourceserver.rki.domain.cassandra.CassandraRkiCovid19Case;
 import net.xcore.ressourceserver.rki.domain.RkiCovid19Case;
 import net.xcore.ressourceserver.rki.domain.RkiCovid19CaseDto;
-import net.xcore.ressourceserver.rki.domain.cassandra.CassandraRkiCovid19CaseKey;
 import net.xcore.ressourceserver.rki.domain.RkiCovid19CaseKey;
 import net.xcore.ressourceserver.rki.domain.cassandra.CassandraRkiCovid19Case;
 import net.xcore.ressourceserver.rki.domain.cassandra.CassandraRkiCovid19CaseKey;
@@ -62,10 +60,7 @@ public class RessourceserverApplication {
   @GetMapping("/rkidata/cases")
   public List<RkiCovid19CaseDto> getRkidata() {
     List<? extends RkiCovid19Case> covidCases = dao.fetchAll();
-<<<<<<< HEAD
-=======
-    List<RkiCovid19CaseDto> dtos = makeRkiCovid19CaseDtos(
-        covidCases);
+    List<RkiCovid19CaseDto> dtos = makeRkiCovid19CaseDtos(covidCases);
     return dtos;
   }
 
@@ -79,7 +74,6 @@ public class RessourceserverApplication {
 
   private static List<RkiCovid19CaseDto> makeRkiCovid19CaseDtos(
       Iterable<? extends RkiCovid19Case> covidCases) {
->>>>>>> cd2b0638d4cc23a6b558e615c1b5ab4346910220
     List<RkiCovid19CaseDto> dtos = new ArrayList<>();
     for (RkiCovid19Case covidCase : covidCases) {
       RkiCovid19CaseDto rkiCovid19CaseDto = new RkiCovid19CaseDto(covidCase);
@@ -105,7 +99,7 @@ public class RessourceserverApplication {
     int i = 0;
     for (RkiCovid19Case covidCase : covidCases) {
       mariaDbCovidCases.add(new MariaDbRkiCovid19Case(covidCase));
-      if(i++ % 1000 == 0){
+      if (i++ % 1000 == 0) {
         repository.saveAll(mariaDbCovidCases);
         mariaDbCovidCases = new ArrayList<>();
         logger.info("Synced {} entries to relational database", i);
@@ -129,10 +123,21 @@ public class RessourceserverApplication {
   @PostMapping(value = "/rkidata/features", consumes = "application/json", produces = "application/json")
   public RKIFeatureCollectionDto postRkiFeatureCollectionData(
       @RequestBody RKIFeatureCollectionDto features) {
+    LocalDateTime maxDateTime;
+    if (!features.features.isEmpty()) {
+      maxDateTime = features.features.get(0).properties.Refdatum;
+    } else {
+      maxDateTime = LocalDateTime.of(2018, 01, 1, 0, 0);
+    }
+    for (RKIFeatureDto feature : features.features) {
+      if (feature.properties.Refdatum.isAfter(maxDateTime)) {
+        maxDateTime = feature.properties.Refdatum;
+      }
+    }
     for (RKIFeatureDto feature : features.features) {
       RkiCovid19Case covid19Case = new CassandraRkiCovid19Case(feature.properties);
       RkiCovid19CaseKey key = new CassandraRkiCovid19CaseKey(covid19Case.getCaseKey().getObjectId(),
-          LocalDateTime.now());
+          maxDateTime);
       covid19Case.setCaseKey(key);
       dao.create(covid19Case);
     }
