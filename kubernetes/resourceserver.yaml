@@ -1,29 +1,31 @@
 apiVersion: apps/v1
 kind: Deployment 
 metadata:
-  name: ressourceserver
+  name: resourceserver
   namespace: default
 spec:
   replicas: 2
   selector:
       matchLabels:
-          ressourceserver: web
+          app: resourceserver 
   template:
       metadata:
           labels:
-              ressourceserver: web
+              app: resourceserver 
 
       spec:
         containers:
-        - name: ressourceserver
-          image: kubemaster01.kubernetes.ka.xcore.net:443/ressourceserver
+        - name: resourceserver
+          image: kubemaster01.kubernetes.ka.xcore.net:443/resourceserver
+          ports:
+          - containerPort: 8080
         imagePullSecrets:
         - name: regcred
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: ressourceserver
+  name: resourceserver
   namespace: default
 spec: 
   type: NodePort
@@ -31,5 +33,6 @@ spec:
     - port: 8080
       targetPort: 8080
       nodePort: 30001
-
-
+      protocol: TCP
+  selector:
+    app: resourceserver
