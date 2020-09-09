@@ -17,6 +17,6 @@ CREATE TABLE rki_covid19_case (
         NeuerTodesfall         int,
         ObjectId               int,
         Refdatum               timestamp,
-        DatensatzDatum         date,
+        DatensatzDatum         timestamp,
         PRIMARY KEY(DatensatzDatum, ObjectId)
 );
