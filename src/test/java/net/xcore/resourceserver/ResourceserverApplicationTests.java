@@ -1,10 +1,10 @@
-package net.xcore.ressourceserver;
+package net.xcore.resourceserver;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class RessourceserverApplicationTests {
+class ResourceserverApplicationTests {
 
   @Test
   void contextLoads() {

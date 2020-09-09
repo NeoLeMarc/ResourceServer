@@ -1,4 +1,4 @@
-package net.xcore.ressourceserver.rki.domain;
+package net.xcore.resourceserver.rki.domain;
 
 import java.time.LocalDateTime;
 

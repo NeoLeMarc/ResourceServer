@@ -1,4 +1,4 @@
-package net.xcore.ressourceserver;
+package net.xcore.resourceserver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
@@ -6,16 +6,16 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import net.xcore.ressourceserver.rki.dao.CassandraRkiCovid19CaseDao;
-import net.xcore.ressourceserver.rki.dao.MariaDbCovid19CaseRepository;
-import net.xcore.ressourceserver.rki.domain.RKIFeatureCollectionDto;
-import net.xcore.ressourceserver.rki.domain.RKIFeatureDto;
-import net.xcore.ressourceserver.rki.domain.RkiCovid19Case;
-import net.xcore.ressourceserver.rki.domain.RkiCovid19CaseDto;
-import net.xcore.ressourceserver.rki.domain.RkiCovid19CaseKey;
-import net.xcore.ressourceserver.rki.domain.cassandra.CassandraRkiCovid19Case;
-import net.xcore.ressourceserver.rki.domain.cassandra.CassandraRkiCovid19CaseKey;
-import net.xcore.ressourceserver.rki.domain.mariadb.MariaDbRkiCovid19Case;
+import net.xcore.resourceserver.rki.dao.CassandraRkiCovid19CaseDao;
+import net.xcore.resourceserver.rki.dao.MariaDbCovid19CaseRepository;
+import net.xcore.resourceserver.rki.domain.RKIFeatureCollectionDto;
+import net.xcore.resourceserver.rki.domain.RKIFeatureDto;
+import net.xcore.resourceserver.rki.domain.RkiCovid19Case;
+import net.xcore.resourceserver.rki.domain.RkiCovid19CaseDto;
+import net.xcore.resourceserver.rki.domain.RkiCovid19CaseKey;
+import net.xcore.resourceserver.rki.domain.cassandra.CassandraRkiCovid19Case;
+import net.xcore.resourceserver.rki.domain.cassandra.CassandraRkiCovid19CaseKey;
+import net.xcore.resourceserver.rki.domain.mariadb.MariaDbRkiCovid19Case;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,9 +29,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 @RestController
-public class RessourceserverApplication {
+public class ResourceserverApplication {
 
-  Logger logger = LoggerFactory.getLogger(RessourceserverApplication.class);
+  Logger logger = LoggerFactory.getLogger(ResourceserverApplication.class);
 
   @Autowired
   private CassandraRkiCovid19CaseDao dao;
@@ -48,7 +48,7 @@ public class RessourceserverApplication {
   }
 
   public static void main(String[] args) {
-    SpringApplication.run(RessourceserverApplication.class, args);
+    SpringApplication.run(ResourceserverApplication.class, args);
   }
 
   @GetMapping("/hello")

@@ -1,10 +1,10 @@
-package net.xcore.ressourceserver.rki.domain.mariadb;
+package net.xcore.resourceserver.rki.domain.mariadb;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import net.xcore.ressourceserver.rki.domain.RkiCovid19CaseKey;
+import net.xcore.resourceserver.rki.domain.RkiCovid19CaseKey;
 
 @Embeddable
 public class MariaDbRkiCovid19CaseKey implements RkiCovid19CaseKey, Serializable {

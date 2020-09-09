@@ -10,9 +10,9 @@
     <relativePath/> <!-- lookup parent from repository -->
   </parent>
   <groupId>net.xcore</groupId>
-  <artifactId>ressourceserver</artifactId>
+  <artifactId>resourceserver</artifactId>
   <version>0.0.1-SNAPSHOT</version>
-  <name>ressourceserver</name>
+  <name>resourceserver</name>
   <description>Demo project for Spring Boot</description>
 
   <properties>

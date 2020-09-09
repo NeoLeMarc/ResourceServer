@@ -1,4 +1,4 @@
-package net.xcore.ressourceserver.config;
+package net.xcore.resourceserver.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -11,7 +11,7 @@ public class ApplicationConfiguration {
   public CqlSessionFactoryBean session() {
     CqlSessionFactoryBean session = new CqlSessionFactoryBean();
     session.setContactPoints("cassandra01.kubernetes.ka.xcore.net");
-    session.setKeyspaceName("ressourceserver");
+    session.setKeyspaceName("resourceserver");
     session.setLocalDatacenter("datacenter1");
     return session;
   }

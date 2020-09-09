@@ -1,7 +1,7 @@
-package net.xcore.ressourceserver.rki.domain.cassandra;
+package net.xcore.resourceserver.rki.domain.cassandra;
 
 import java.time.LocalDateTime;
-import net.xcore.ressourceserver.rki.domain.RkiCovid19CaseKey;
+import net.xcore.resourceserver.rki.domain.RkiCovid19CaseKey;
 import org.springframework.data.cassandra.core.cql.PrimaryKeyType;
 import org.springframework.data.cassandra.core.mapping.CassandraType;
 import org.springframework.data.cassandra.core.mapping.CassandraType.Name;

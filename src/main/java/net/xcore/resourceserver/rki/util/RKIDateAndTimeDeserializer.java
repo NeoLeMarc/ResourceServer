@@ -1,4 +1,4 @@
-package net.xcore.ressourceserver.rki.util;
+package net.xcore.resourceserver.rki.util;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;

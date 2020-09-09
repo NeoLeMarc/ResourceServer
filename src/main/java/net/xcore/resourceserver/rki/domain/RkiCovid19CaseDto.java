@@ -1,9 +1,9 @@
-package net.xcore.ressourceserver.rki.domain;
+package net.xcore.resourceserver.rki.domain;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import java.time.LocalDateTime;
-import net.xcore.ressourceserver.rki.util.RKIDateAndTimeDeserializer;
-import net.xcore.ressourceserver.rki.util.RKIDateAndTimeDeserializer2;
+import net.xcore.resourceserver.rki.util.RKIDateAndTimeDeserializer;
+import net.xcore.resourceserver.rki.util.RKIDateAndTimeDeserializer2;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

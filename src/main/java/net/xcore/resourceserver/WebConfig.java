@@ -1,4 +1,4 @@
-package net.xcore.ressourceserver;
+package net.xcore.resourceserver;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.ObjectMapper;

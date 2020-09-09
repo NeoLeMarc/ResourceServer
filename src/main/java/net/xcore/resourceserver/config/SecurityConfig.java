@@ -1,4 +1,4 @@
-package net.xcore.ressourceserver.config;
+package net.xcore.resourceserver.config;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
