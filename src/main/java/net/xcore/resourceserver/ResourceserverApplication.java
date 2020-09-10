@@ -6,6 +6,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
+import net.xcore.resourceserver.rki.dao.CassandraCovid19CaseRepository;
 import net.xcore.resourceserver.rki.dao.CassandraRkiCovid19CaseDao;
 import net.xcore.resourceserver.rki.dao.MariaDbCovid19CaseRepository;
 import net.xcore.resourceserver.rki.domain.RKIFeatureCollectionDto;
@@ -35,6 +36,9 @@ public class ResourceserverApplication {
 
   @Autowired
   private CassandraRkiCovid19CaseDao dao;
+
+  @Autowired
+  private CassandraCovid19CaseRepository cassandraRepository;
 
   @Autowired
   private ObjectMapper objectMapper;
@@ -118,6 +122,13 @@ public class ResourceserverApplication {
   @PostMapping(value = "/rkidata/case", consumes = "application/json", produces = "application/json")
   public RkiCovid19CaseDto postRkiCaseData(@RequestBody RkiCovid19CaseDto rkiCase) {
     return rkiCase;
+  }
+
+  @GetMapping(value = "/rkidata/test", produces = "application/json")
+  public RkiCovid19CaseDto rkiFetchOneTester() {
+    LocalDateTime datensatzDatum = LocalDateTime.of(2020, 9, 6, 2, 0, 0);
+    List<? extends RkiCovid19Case> cases = dao.fetchByDatensatzDatum(datensatzDatum, 1);
+    return new RkiCovid19CaseDto(cases.get(0));
   }
 
   @PostMapping(value = "/rkidata/features", consumes = "application/json", produces = "application/json")

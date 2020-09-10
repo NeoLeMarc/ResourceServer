@@ -17,5 +17,6 @@ public class WebConfig {
         .serializationInclusion(JsonInclude.Include.NON_NULL)
         .propertyNamingStrategy(PropertyNamingStrategy.UPPER_CAMEL_CASE)
         .build();
+
   }
 }
