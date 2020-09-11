@@ -13,14 +13,19 @@ public class CassandraRkiCovid19CaseDaoTest {
   @Autowired
   private CassandraRkiCovid19CaseDao dao;
 
-  @Autowired
-  private CassandraCovid19CaseRepository cassandraRepository;
-
   @Test
   public void testFetchByDatensatzDatum() {
     LocalDateTime datensatzDatum = LocalDateTime.of(2020, 9, 6, 2, 0, 0);
-    List<? extends RkiCovid19Case> cases = dao.fetchByDatensatzDatum(datensatzDatum,1);
+    List<? extends RkiCovid19Case> cases = dao.fetchByDatensatzDatum(datensatzDatum, 1);
     System.out.println(cases.get(0));
+  }
+
+  @Test
+  public void testFetchDistinctDatensatzDatum() {
+    List<LocalDateTime> datensatzDatums = dao.getDistinctDatensatzDatum();
+    for(LocalDateTime datensatzDatum : datensatzDatums){
+      System.out.println(datensatzDatum);
+    }
   }
 
 }
