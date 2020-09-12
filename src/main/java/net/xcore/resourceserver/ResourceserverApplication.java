@@ -2,6 +2,7 @@ package net.xcore.resourceserver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -98,8 +99,46 @@ public class ResourceserverApplication {
   @PostMapping("/rkidata/relational/sync")
   public String triggerRkiRelationalSync() {
     List<? extends RkiCovid19Case> covidCases = dao.fetchAll();
-    List<MariaDbRkiCovid19Case> mariaDbCovidCases = new ArrayList<>();
     logger.info("Started relational database sync");
+    saveCasesInMariaDb(covidCases);
+    logger.info("Finished relational database sync");
+    return "OK";
+  }
+
+  @PostMapping("/rkidata/relational/missing/sync")
+  public String triggerRkiRelationalSyncOfMissing() {
+    List<LocalDateTime> datasetsInCassandra = dao.getDistinctDatensatzDatum();
+    List<LocalDateTime> datasetsInMariaDb = repository.getDistinctDatensatzDatum();
+    List<LocalDateTime> missing = new ArrayList<>();
+
+    for (LocalDateTime datensatzDatum : datasetsInCassandra) {
+      if (dayInSet(datensatzDatum, datasetsInMariaDb)) {
+        logger.info("{} already in MariaDB - skipping", datensatzDatum);
+      } else {
+        missing.add(datensatzDatum);
+        logger.info("{} NOT in MariaDB - syncing", datensatzDatum);
+        List<? extends RkiCovid19Case> covidCases = dao.fetchByDatensatzDatum(datensatzDatum);
+        logger.info("Started relational database sync for {}", datensatzDatum);
+        saveCasesInMariaDb(covidCases);
+        logger.info("Finished relational database sync for {}", datensatzDatum);
+      }
+    }
+    return "Synced: " + missing;
+  }
+
+  private static boolean dayInSet(LocalDateTime datensatzDatum,
+      List<LocalDateTime> datensatzDatumList) {
+    for (LocalDateTime datensatzFromList : datensatzDatumList) {
+      if (LocalDate.from(datensatzDatum).equals(LocalDate.from(datensatzFromList))) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+
+  private void saveCasesInMariaDb(List<? extends RkiCovid19Case> covidCases) {
+    List<MariaDbRkiCovid19Case> mariaDbCovidCases = new ArrayList<>();
     int i = 0;
     for (RkiCovid19Case covidCase : covidCases) {
       mariaDbCovidCases.add(new MariaDbRkiCovid19Case(covidCase));
@@ -110,8 +149,6 @@ public class ResourceserverApplication {
       }
     }
     repository.saveAll(mariaDbCovidCases);
-    logger.info("Finished relational database sync");
-    return "OK";
   }
 
   @PostMapping(value = "/rkidata/feature", consumes = "application/json", produces = "application/json")
