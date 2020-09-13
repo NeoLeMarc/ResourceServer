@@ -1,20 +1,30 @@
 package net.xcore.resourceserver.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.cassandra.config.CqlSessionFactoryBean;
 import org.springframework.data.cassandra.core.cql.CqlTemplate;
 import org.springframework.data.cassandra.core.cql.session.DefaultSessionFactory;
 
+@EnableConfigurationProperties(VaultCassandraConfig.class)
 @Configuration
 public class ApplicationConfiguration {
+
+  @Autowired
+  private final VaultCassandraConfig config;
+
+  public ApplicationConfiguration(VaultCassandraConfig config) {
+    this.config = config;
+  }
 
   @Bean
   public CqlSessionFactoryBean session() {
     CqlSessionFactoryBean session = new CqlSessionFactoryBean();
-    session.setContactPoints("cassandra01.kubernetes.ka.xcore.net");
-    session.setKeyspaceName("resourceserver");
-    session.setLocalDatacenter("datacenter1");
+    session.setContactPoints(config.getContactpoints());
+    session.setKeyspaceName(config.getKeyspace());
+    session.setLocalDatacenter(config.getLocaldatacenter());
     return session;
   }
 

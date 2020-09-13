@@ -2,34 +2,34 @@ package net.xcore.resourceserver.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties("resourceserver")
-public class VaultConfig {
-  private String mariaDbUsername;
-  private String mariaDbPassword;
-  private String mariaDbUrl;
+@ConfigurationProperties("mariadb")
+public class VaultMariaDbConfig {
+  private String username;
+  private String password;
+  private String url;
 
-  public String getMariaDbUsername() {
-    return mariaDbUsername;
+  public String getUsername() {
+    return username;
   }
 
-  public void setMariaDbUsername(String mariaDbUsername) {
-    this.mariaDbUsername = mariaDbUsername;
+  public void setUsername(String username) {
+    this.username = username;
   }
 
-  public String getMariaDbPassword() {
-    return mariaDbPassword;
+  public String getPassword() {
+    return password;
   }
 
-  public void setMariaDbPassword(String mariaDbPassword) {
-    this.mariaDbPassword = mariaDbPassword;
+  public void setPassword(String password) {
+    this.password = password;
   }
 
-  public String getMariaDbUrl() {
-    return mariaDbUrl;
+  public String getUrl() {
+    return url;
   }
 
-  public void setMariaDbUrl(String mariaDbUrl) {
-    this.mariaDbUrl = mariaDbUrl;
+  public void setUrl(String url) {
+    this.url = url;
   }
 }
 
