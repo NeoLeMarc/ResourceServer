@@ -14,6 +14,4 @@ esac
 echo "Enter mySQL password"
 read -s MYSQLPW
 
-vault kv put secret/resourceserver mariadb.username=resourceserver
-vault kv put secret/resourceserver mariadb.password=$MYSQLPW
-vault kv put secret/resourceserver madiadb.url=jdbc:mariadb://mysql01.kubernetes.ka.xcore.net:3306/resourceserver
+vault kv put secret/resourceserver mariadb.username=resourceserver mariadb.password=$MYSQLPW madiadb.url=jdbc:mariadb://mysql01.kubernetes.ka.xcore.net:3306/resourceserver
