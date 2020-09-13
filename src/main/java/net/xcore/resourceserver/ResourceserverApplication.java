@@ -2,6 +2,8 @@ package net.xcore.resourceserver;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -53,7 +55,23 @@ public class ResourceserverApplication {
   }
 
   public static void main(String[] args) {
+    logger.info("main({})", args);
+    if (args.length >= 1) {
+      logger.info("Loading bootstrap properties from {}", args[0]);
+      loadBootstrapConfiguration(args[0]);
+    } else {
+      loadBootstrapConfiguration("/home/marcel/properties/resourceserver/dev.properties");
+    }
     SpringApplication.run(ResourceserverApplication.class, args);
+  }
+
+  private static void loadBootstrapConfiguration(String path) {
+    if (Files.exists(Paths.get(path))) {
+      logger.info("Found bootstrap properties {} - updating spring.cloud.bootstrap.location", path);
+      System.setProperty("spring.cloud.bootstrap.location", path);
+    } else {
+      logger.info("Failed to load bootstrap properties");
+    }
   }
 
   @GetMapping("/hello")
