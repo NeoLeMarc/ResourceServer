@@ -9,7 +9,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import net.xcore.resourceserver.rki.dao.CassandraCovid19CaseRepository;
 import net.xcore.resourceserver.rki.dao.CassandraRkiCovid19CaseDao;
 import net.xcore.resourceserver.rki.dao.MariaDbCovid19CaseRepository;
 import net.xcore.resourceserver.rki.domain.RKIFeatureCollectionDto;
@@ -36,18 +35,18 @@ import org.springframework.web.bind.annotation.RestController;
 public class ResourceserverApplication {
 
   private static final Logger logger = LoggerFactory.getLogger(ResourceserverApplication.class);
+  public static final LocalDateTime KNOWN_DATE_BEFORE_COVID19 = LocalDateTime.of(2018, 1, 1, 0, 0);
 
   @Autowired
   private CassandraRkiCovid19CaseDao dao;
-
-  @Autowired
-  private CassandraCovid19CaseRepository cassandraRepository;
 
   @Autowired
   private ObjectMapper objectMapper;
 
   @Autowired
   private MariaDbCovid19CaseRepository repository;
+  public static final LocalDateTime WELL_KNOWN_DATENSATZ_DATUM = LocalDateTime
+      .of(2020, 9, 6, 2, 0, 0);
 
   @PostConstruct
   public void setUp() {
@@ -55,8 +54,12 @@ public class ResourceserverApplication {
   }
 
   public static void main(String[] args) {
-    logger.info("main({})", args);
-    if (args.length >= 1) {
+    if (args != null) {
+      logger.info("main({})", (Object) args);
+    } else {
+      logger.info("main() called without arguments");
+    }
+    if (args != null && args.length >= 1) {
       logger.info("Loading bootstrap properties from {}", args[0]);
       loadBootstrapConfiguration(args[0]);
     } else {
@@ -146,12 +149,8 @@ public class ResourceserverApplication {
 
   private static boolean dayInSet(LocalDateTime datensatzDatum,
       List<LocalDateTime> datensatzDatumList) {
-    for (LocalDateTime datensatzFromList : datensatzDatumList) {
-      if (LocalDate.from(datensatzDatum).equals(LocalDate.from(datensatzFromList))) {
-        return true;
-      }
-    }
-    return false;
+    return datensatzDatumList.stream().anyMatch(datensatzFromList -> LocalDate.from(datensatzDatum)
+        .equals(LocalDate.from(datensatzFromList)));
   }
 
 
@@ -181,8 +180,7 @@ public class ResourceserverApplication {
 
   @GetMapping(value = "/rkidata/test", produces = "application/json")
   public RkiCovid19CaseDto rkiFetchOneTester() {
-    LocalDateTime datensatzDatum = LocalDateTime.of(2020, 9, 6, 2, 0, 0);
-    List<? extends RkiCovid19Case> cases = dao.fetchByDatensatzDatum(datensatzDatum, 1);
+    List<? extends RkiCovid19Case> cases = dao.fetchByDatensatzDatum(WELL_KNOWN_DATENSATZ_DATUM, 1);
     return new RkiCovid19CaseDto(cases.get(0));
   }
 
@@ -193,7 +191,7 @@ public class ResourceserverApplication {
     if (!features.features.isEmpty()) {
       maxDateTime = features.features.get(0).properties.Refdatum;
     } else {
-      maxDateTime = LocalDateTime.of(2018, 01, 1, 0, 0);
+      maxDateTime = KNOWN_DATE_BEFORE_COVID19;
     }
     for (RKIFeatureDto feature : features.features) {
       if (feature.properties.Refdatum.isAfter(maxDateTime)) {

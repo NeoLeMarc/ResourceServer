@@ -8,15 +8,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-public class CassandraRkiCovid19CaseDaoTest {
+public class CassandraRkiCovid19CaseDaoIntegrationTest {
 
+  public static final LocalDateTime WELL_KNOWN_DATE_IN_DATABASE = LocalDateTime
+      .of(2020, 9, 6, 2, 0, 0);
   @Autowired
   private CassandraRkiCovid19CaseDao dao;
 
   @Test
   public void testFetchByDatensatzDatum() {
-    LocalDateTime datensatzDatum = LocalDateTime.of(2020, 9, 6, 2, 0, 0);
-    List<? extends RkiCovid19Case> cases = dao.fetchByDatensatzDatum(datensatzDatum, 1);
+    List<? extends RkiCovid19Case> cases = dao.fetchByDatensatzDatum(WELL_KNOWN_DATE_IN_DATABASE, 1);
     System.out.println(cases.get(0));
   }
 
