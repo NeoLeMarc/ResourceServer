@@ -59,9 +59,18 @@ public class ResourceserverApplication {
     } else {
       logger.info("main() called without arguments");
     }
-    if (args != null && args.length >= 1) {
-      logger.info("Loading bootstrap properties from {}", args[0]);
-      loadBootstrapConfiguration(args[0]);
+
+    String propertyPath = null;
+    for(String arg : args) {
+      if(arg != null && !arg.isEmpty() && arg.charAt(0) != '-'){
+        propertyPath = arg;
+        break;
+      }
+    }
+
+    if (propertyPath != null && !propertyPath.isEmpty()) {
+      logger.info("Loading bootstrap properties from {}", propertyPath);
+      loadBootstrapConfiguration(propertyPath);
     } else {
       loadBootstrapConfiguration("/home/marcel/properties/resourceserver/dev.properties");
     }
