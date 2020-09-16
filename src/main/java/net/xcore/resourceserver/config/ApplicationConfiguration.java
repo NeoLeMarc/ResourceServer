@@ -5,6 +5,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.cassandra.config.CqlSessionFactoryBean;
+import org.springframework.data.cassandra.core.AsyncCassandraTemplate;
 import org.springframework.data.cassandra.core.cql.CqlTemplate;
 import org.springframework.data.cassandra.core.cql.session.DefaultSessionFactory;
 
@@ -32,6 +33,12 @@ public class ApplicationConfiguration {
   public CqlTemplate cqlTemplate() {
     CqlTemplate template = new CqlTemplate();
     template.setSessionFactory(new DefaultSessionFactory(session().getObject()));
+    return template;
+  }
+
+  @Bean
+  public AsyncCassandraTemplate asyncCassandraTemplate(){
+    AsyncCassandraTemplate template = new AsyncCassandraTemplate(session().getObject());
     return template;
   }
 }

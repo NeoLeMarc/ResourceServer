@@ -11,6 +11,7 @@ import net.xcore.resourceserver.rki.domain.cassandra.CassandraRkiCovid19Case;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.cassandra.core.AsyncCassandraTemplate;
 import org.springframework.data.cassandra.core.CassandraTemplate;
 import org.springframework.data.cassandra.core.cql.CqlTemplate;
 import org.springframework.data.cassandra.core.query.Criteria;
@@ -24,6 +25,9 @@ public class CassandraRkiCovid19CaseDao {
 
   @Autowired
   private CassandraTemplate cassandraTemplate;
+
+  @Autowired
+  private AsyncCassandraTemplate asyncCassandraTemplate;
 
   @Autowired
   private CqlTemplate cqlTemplate;
@@ -69,6 +73,6 @@ public class CassandraRkiCovid19CaseDao {
   }
 
   public void create(RkiCovid19Case covid19Case) {
-    cassandraTemplate.insert(covid19Case);
+    asyncCassandraTemplate.insert(covid19Case);
   }
 }
