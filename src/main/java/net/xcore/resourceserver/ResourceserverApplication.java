@@ -19,9 +19,11 @@ import net.xcore.resourceserver.rki.domain.RkiCovid19CaseKey;
 import net.xcore.resourceserver.rki.domain.cassandra.CassandraRkiCovid19Case;
 import net.xcore.resourceserver.rki.domain.cassandra.CassandraRkiCovid19CaseKey;
 import net.xcore.resourceserver.rki.domain.mariadb.MariaDbRkiCovid19Case;
+import org.apache.catalina.core.ApplicationContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -43,6 +45,9 @@ public class ResourceserverApplication {
   @Autowired
   private ObjectMapper objectMapper;
 
+  @Value("${spring.application.name}")
+  private String appName;
+
   @Autowired
   private MariaDbCovid19CaseRepository repository;
   public static final LocalDateTime WELL_KNOWN_DATENSATZ_DATUM = LocalDateTime
@@ -51,6 +56,7 @@ public class ResourceserverApplication {
   @PostConstruct
   public void setUp() {
     objectMapper.registerModule(new JavaTimeModule());
+    logger.info("spring.application.name = {}", appName);
   }
 
   public static void main(String[] args) {
