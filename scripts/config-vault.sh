@@ -21,4 +21,4 @@ echo "Enter mySQL password"
 read -s MYSQLPW
 
 
-vault kv put secret/resourceserver spring.datasource.username=resourceserver spring.datasource.password=$MYSQLPW spring.datasource.url=jdbc:mariadb://mysql01.kubernetes.ka.xcore.net:3306/resourceserver cassandra.contactpoints=cassandra01.kubernetes.ka.xcore.net cassandra.keyspace=resourceserver cassandra.localdatacenter=datacenter1
+vault kv put secret/resourceserver spring.datasource.username=resourceserver spring.datasource.password=$MYSQLPW spring.datasource.url=jdbc:mariadb://mysql01.kubernetes.ka.xcore.net:3306/resourceserver cassandra.contactpoints=cassandra01.kubernetes.ka.xcore.net cassandra.keyspace=resourceserver cassandra.localdatacenter=datacenter1 userservice.url=$USERSERVICE_URL userservice.user=$USERSERVICE_USER userservice.password=$USERSERVICE_PASSWORD
